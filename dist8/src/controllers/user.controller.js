@@ -49,6 +49,12 @@ let UserController = class UserController {
             throw new rest_1.HttpErrors.Unauthorized('JWT token is required');
         }
     }
+    // @del('/users')
+    // async delAllUsers(@param.query.string('jwt') jwt: string): Promise<any>{
+    //   if (!jwt) throw new HttpErrors.Unauthorized('JWT token is required');
+    //   try {
+    //   }
+    // }
     // edit Profile
     async editUserInfo(jwt, obj) {
         if (!jwt)

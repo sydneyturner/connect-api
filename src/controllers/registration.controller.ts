@@ -39,4 +39,6 @@ export class RegistrationController {
     storedUser.password = "";
     return storedUser;
   }
+
+
 }
