@@ -9,6 +9,7 @@ import { verify } from "jsonwebtoken";
 import { UserRepository } from "../repositories/user.repository";
 import { User } from "../models/user";
 import { PaymentMethod } from "../models/payment-method";
+import { C_BLOCK_COMMENT_MODE } from "highlight.js";
 
 export class PaymentController {
   constructor(@repository(PaymentMethodsRepository.name) private paymentRepo: PaymentMethodsRepository,
@@ -75,18 +76,22 @@ export class PaymentController {
   async newCustomer(@param.query.string('jwt') jwt: string): Promise<any> {
     var stripe = require("stripe")("sk_test_R37hOTQ4G9B8DIOzXtnhCKEP");
 
-    try {
-      const customer = await stripe.customers.create({
-        source: 'tok_mastercard',
-        //paymentMethod.cardSource,
-      })
-      console.log(customer);
-      return customer;
-    }
-    catch (err) {
-      console.log(err);
-      throw new HttpErrors.BadRequest('Error.');
-    }
+    // try {
+    // const customer = await stripe.customers.create({
+    //   description: 'Customer for andrew.wilson@example.com',
+    //   source: 'tok_mastercard'
+    //   //paymentMethod.cardSource,
+    // }, function (err, customer) {
+    //   if (err) { return cb(err); }
+    //   console.log(customer);
+    //   return customer;
+    // });
+
+    // }
+    // catch (err) {
+    //   console.log(err);
+    //   throw new HttpErrors.BadRequest('Error.');
+    // }
   }
 
 
