@@ -21,11 +21,14 @@ const user_repository_1 = require("../repositories/user.repository");
 // import {Login} from '../models/login';
 const jsonwebtoken_1 = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const driver_1 = require("../models/driver");
+const driver_repository_1 = require("../repositories/driver.repository");
 let LoginController = class LoginController {
-    constructor(userRepo) {
+    constructor(userRepo, driverRepo) {
         this.userRepo = userRepo;
+        this.driverRepo = driverRepo;
     }
-    async login(login) {
+    async loginUser(login) {
         var users = await this.userRepo.find();
         var email = login.email;
         var password = await bcrypt.hash(login.password, 10);
@@ -53,17 +56,54 @@ let LoginController = class LoginController {
         }
         throw new rest_1.HttpErrors.NotFound('User not found, sorry!');
     }
+    async loginDriver(login) {
+        var drivers = await this.driverRepo.find();
+        var email = login.email;
+        var password = await bcrypt.hash(login.password, 10);
+        for (var i = 0; i < drivers.length; i++) {
+            var driver = drivers[i];
+            // find the user by email address if not...(look at Perry's code)
+            if (driver.email == email && await bcrypt.compare(login.password, driver.password)) {
+                var jwt = jsonwebtoken_1.sign({
+                    user: {
+                        id: driver.id,
+                        firstname: driver.firstname,
+                        lastname: driver.lastname,
+                        email: driver.email
+                    },
+                    anything: "hello",
+                }, 'shh', {
+                    issuer: 'auth.ix.co.za',
+                    audience: 'ix.co.za',
+                });
+                console.log(jwt);
+                return {
+                    token: jwt,
+                };
+            }
+        }
+        throw new rest_1.HttpErrors.NotFound('Driver not found, sorry!');
+    }
 };
 __decorate([
-    rest_1.post('/login'),
+    rest_1.post('/loginUser'),
     __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_1.User]),
     __metadata("design:returntype", Promise)
-], LoginController.prototype, "login", null);
+], LoginController.prototype, "loginUser", null);
+__decorate([
+    rest_1.post('/loginDriver'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [driver_1.Driver]),
+    __metadata("design:returntype", Promise)
+], LoginController.prototype, "loginDriver", null);
 LoginController = __decorate([
     __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
-    __metadata("design:paramtypes", [user_repository_1.UserRepository])
+    __param(1, repository_1.repository(driver_repository_1.DriverRepository.name)),
+    __metadata("design:paramtypes", [user_repository_1.UserRepository,
+        driver_repository_1.DriverRepository])
 ], LoginController);
 exports.LoginController = LoginController;
 //# sourceMappingURL=login.controller.js.map

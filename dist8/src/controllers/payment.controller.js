@@ -71,17 +71,21 @@ let PaymentController = class PaymentController {
     // create new customer
     async newCustomer(jwt) {
         var stripe = require("stripe")("sk_test_R37hOTQ4G9B8DIOzXtnhCKEP");
-        try {
-            const customer = await stripe.customers.create({
-                source: 'tok_mastercard',
-            });
-            console.log(customer);
-            return customer;
-        }
-        catch (err) {
-            console.log(err);
-            throw new rest_1.HttpErrors.BadRequest('Error.');
-        }
+        // try {
+        // const customer = await stripe.customers.create({
+        //   description: 'Customer for andrew.wilson@example.com',
+        //   source: 'tok_mastercard'
+        //   //paymentMethod.cardSource,
+        // }, function (err, customer) {
+        //   if (err) { return cb(err); }
+        //   console.log(customer);
+        //   return customer;
+        // });
+        // }
+        // catch (err) {
+        //   console.log(err);
+        //   throw new HttpErrors.BadRequest('Error.');
+        // }
     }
     async addPayment(paymentMethod, jwt) {
         var stripe = require("stripe")("sk_test_R37hOTQ4G9B8DIOzXtnhCKEP");

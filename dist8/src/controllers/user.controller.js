@@ -19,9 +19,11 @@ const user_repository_1 = require("../repositories/user.repository");
 const rest_1 = require("@loopback/rest");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const driver_repository_1 = require("../repositories/driver.repository");
 let UserController = class UserController {
-    constructor(userRepo) {
+    constructor(userRepo, driverRepo) {
         this.userRepo = userRepo;
+        this.driverRepo = driverRepo;
     }
     async getAllUsers(jwt) {
         if (!jwt)
@@ -113,7 +115,9 @@ __decorate([
 ], UserController.prototype, "editUserInfo", null);
 UserController = __decorate([
     __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
-    __metadata("design:paramtypes", [user_repository_1.UserRepository])
+    __param(1, repository_1.repository(driver_repository_1.DriverRepository.name)),
+    __metadata("design:paramtypes", [user_repository_1.UserRepository,
+        driver_repository_1.DriverRepository])
 ], UserController);
 exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map

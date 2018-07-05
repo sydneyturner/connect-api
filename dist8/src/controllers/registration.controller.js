@@ -19,9 +19,12 @@ const rest_1 = require("@loopback/rest");
 const user_1 = require("../models/user");
 const user_repository_1 = require("../repositories/user.repository");
 const bcrypt = require("bcrypt");
+const driver_1 = require("../models/driver");
+const driver_repository_1 = require("../repositories/driver.repository");
 let RegistrationController = class RegistrationController {
-    constructor(userRepo) {
+    constructor(userRepo, driverRepo) {
         this.userRepo = userRepo;
+        this.driverRepo = driverRepo;
     }
     async createNewUser(user) {
         // Check required fields
@@ -43,17 +46,46 @@ let RegistrationController = class RegistrationController {
         storedUser.password = "";
         return storedUser;
     }
+    async createNewDriver(driver) {
+        // Check required fields
+        if (!driver.email || !driver.password) {
+            throw new rest_1.HttpErrors.BadRequest('missing data');
+        }
+        // Check that user does not already exist
+        let driverExists = !!(await this.driverRepo.count({ email: driver.email }));
+        if (driverExists) {
+            throw new rest_1.HttpErrors.BadRequest('driver already exists');
+        }
+        let hashedPassword = await bcrypt.hash(driver.password, 10);
+        var driverToStore = new driver_1.Driver();
+        driverToStore.firstname = driver.firstname;
+        driverToStore.lastname = driver.lastname;
+        driverToStore.email = driver.email;
+        driverToStore.password = hashedPassword;
+        let storedDriver = await this.driverRepo.create(driverToStore);
+        storedDriver.password = "";
+        return storedDriver;
+    }
 };
 __decorate([
-    rest_1.post('/registration'),
+    rest_1.post('/registerUser'),
     __param(0, rest_1.requestBody()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_1.User]),
     __metadata("design:returntype", Promise)
 ], RegistrationController.prototype, "createNewUser", null);
+__decorate([
+    rest_1.post('/registerDriver'),
+    __param(0, rest_1.requestBody()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [driver_1.Driver]),
+    __metadata("design:returntype", Promise)
+], RegistrationController.prototype, "createNewDriver", null);
 RegistrationController = __decorate([
     __param(0, repository_1.repository(user_repository_1.UserRepository.name)),
-    __metadata("design:paramtypes", [user_repository_1.UserRepository])
+    __param(1, repository_1.repository(driver_repository_1.DriverRepository.name)),
+    __metadata("design:paramtypes", [user_repository_1.UserRepository,
+        driver_repository_1.DriverRepository])
 ], RegistrationController);
 exports.RegistrationController = RegistrationController;
 //# sourceMappingURL=registration.controller.js.map

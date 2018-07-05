@@ -8,4 +8,7 @@ __export(require("./user.controller"));
 __export(require("./registration.controller"));
 __export(require("./login.controller"));
 __export(require("./payment.controller"));
+__export(require("./driver.controller"));
+__export(require("./ride.controller"));
+__export(require("./routes.controller"));
 //# sourceMappingURL=index.js.map

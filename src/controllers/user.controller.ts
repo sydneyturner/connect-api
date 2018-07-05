@@ -7,9 +7,12 @@ import { post, get, requestBody, HttpErrors, param, put, patch } from "@loopback
 import { sign, verify } from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import { User } from "../models/user";
+import { DriverRepository } from "../repositories/driver.repository";
+import { Driver } from "../models/driver";
 
 export class UserController {
-  constructor(@repository(UserRepository.name) private userRepo: UserRepository) { }
+  constructor(@repository(UserRepository.name) private userRepo: UserRepository,
+    @repository(DriverRepository.name) private driverRepo: DriverRepository) { }
 
   @get('/users')
   async getAllUsers(@param.query.string('jwt') jwt: string): Promise<any> {
@@ -88,5 +91,22 @@ export class UserController {
     }
 
   }
+
+  // later: move to ride controller
+
+  // // want to return a Driver
+  // @get('getDriver')
+  // async getDriver(@param.query.string('jwt') jwt: string): Promise<any> {
+  //   try {
+  //     var jwtDriver = verify(jwt, 'shh' as any);
+  //     console.log(jwtDriver);
+  //     return jwtDriver;
+  //     // var driverID = await this.driverRepo.findById(1); // need to change this
+  //   }
+  //   catch (err) {
+  //     console.log(err);
+  //     throw new HttpErrors.BadRequest('JWT token invalid');
+  //   }
+  // }
 }
 
