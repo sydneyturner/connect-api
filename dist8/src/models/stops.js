@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let Ride = class Ride extends repository_1.Entity {
+let Stops = class Stops extends repository_1.Entity {
     getId() {
         return this.id;
     }
@@ -21,29 +21,46 @@ __decorate([
         id: true
     }),
     __metadata("design:type", Number)
-], Ride.prototype, "id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Ride.prototype, "userID", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Ride.prototype, "driverID", void 0);
+], Stops.prototype, "id", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
+        required: true
     }),
     __metadata("design:type", String)
-], Ride.prototype, "status", void 0);
-Ride = __decorate([
+], Stops.prototype, "route", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+        required: true
+    }),
+    __metadata("design:type", String)
+], Stops.prototype, "name", void 0);
+__decorate([
+    repository_1.property({
+        type: 'number',
+        length: 10,
+        required: true
+    }),
+    __metadata("design:type", Number)
+], Stops.prototype, "lat", void 0);
+__decorate([
+    repository_1.property({
+        type: 'number',
+        length: 10,
+        required: true
+    }),
+    __metadata("design:type", Number)
+], Stops.prototype, "lng", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+        required: true
+    }),
+    __metadata("design:type", String)
+], Stops.prototype, "address", void 0);
+Stops = __decorate([
     repository_1.model()
-], Ride);
-exports.Ride = Ride;
-//# sourceMappingURL=ride.js.map
+], Stops);
+exports.Stops = Stops;
+//# sourceMappingURL=stops.js.map

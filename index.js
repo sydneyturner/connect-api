@@ -10,35 +10,32 @@ if (require.main === module) {
   });
 }
 
-// // Import the ws module as a variable called WebSocketServer.
-// var WebSocketServer = require("ws").Server;
+// let app = require('express')();
+// let http = require('http').Server(app);
+// let io = require('socket.io')(http);
 
-// // Create a new WebSocketServer running on port 7007.
-// var wss = new WebSocketServer({ port: 7007 });
+// io.on('connection', (socket) => {
 
-// // Output a log to say the server is running.
-// console.log("Server is Running...");
-
-// // Create a "broadcast" function on our WebSocketServer object.
-// // The function will take a "msg" paramter. When called, it will
-// // loop through all the connected clients and send them the msg.
-// wss.broadcast = function broadcastMsg(msg) {
-//   wss.clients.forEach(function each(client) {
-//     client.send(msg);
+//   socket.on('disconnect', function () {
+//     io.emit('users-changed', { user: socket.nickname, event: 'left' });
 //   });
-// };
 
-// // Create a listener function for the "connection" event.
-// // Each time we get a connection, the following function
-// // is called.
-// wss.on('connection', function connection(ws) {
-//   // Store the remote systems IP address as "remoteIp".
-//   var remoteIp = ws.upgradeReq.connection.remoteAddress;
-//   // Print a log with the IP of the client that connected.
-//   console.log('Connection received: ', remoteIp);
-//   // Add a listener which listens for the "message" event.
+//   // socket.on('driver-loc', (driver) => {
+//   //   socket.driver = driver;
+//   //   io.emit('new driver', { user: driver, event: 'joined' });
+//   // });
 
-//   // When a "message" event is received, take the contents
-//   // of the message and pass it to the broadcast() function.
-//   ws.on('message', wss.broadcast);
+//   socket.on('sendLocation', (data) => {
+//     // user: driver
+//     io.emit('sendToEveryone', { data });
+//   });
+
+
 // });
+
+// var port = process.env.PORT || 3001;
+
+// http.listen(port, function () {
+//   console.log('listening in http://localhost:' + port);
+// });
+

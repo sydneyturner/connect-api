@@ -11,7 +11,7 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db, done) {
-  db.createTable('routes', {
+  db.createTable('stops', {
     id: {
       type: 'int',
       primaryKey: 'true',
@@ -19,24 +19,40 @@ exports.up = function (db, done) {
       notNull: true
     },
 
+    route: {
+      type: 'string',
+      length: 100,
+      notNull: true
+    },
+
+    name: {
+      type: 'string',
+      notNull: true
+    },
+
     lat: {
-      type: 'decimal',
-      length: 20,
+      type: 'decimal(10,8)',
+      // length: 20,
       notNull: true
     },
 
     lng: {
-      type: 'decimal',
-      length: 20,
+      type: 'decimal(10,8)',
+      // length: 20,
       notNull: true
     },
 
+    address: {
+      type: 'string',
+      length: 100,
+      notNull: true
+    }
 
   }, done);
 };
 
 exports.down = function (db, done) {
-  db.dropTable('routes', done)
+  db.dropTable('stops', done)
 };
 
 exports._meta = {

@@ -8,42 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let Ride = class Ride extends repository_1.Entity {
-    getId() {
-        return this.id;
+const core_1 = require("@loopback/core");
+const loopback_datasource_juggler_1 = require("loopback-datasource-juggler");
+const stops_1 = require("../models/stops");
+let StopsRepository = class StopsRepository extends repository_1.DefaultCrudRepository {
+    constructor(datasource) {
+        super(stops_1.Stops, datasource);
+        this.datasource = datasource;
     }
 };
-__decorate([
-    repository_1.property({
-        type: 'number',
-        id: true
-    }),
-    __metadata("design:type", Number)
-], Ride.prototype, "id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Ride.prototype, "userID", void 0);
-__decorate([
-    repository_1.property({
-        type: 'number',
-        required: true
-    }),
-    __metadata("design:type", Number)
-], Ride.prototype, "driverID", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-    }),
-    __metadata("design:type", String)
-], Ride.prototype, "status", void 0);
-Ride = __decorate([
-    repository_1.model()
-], Ride);
-exports.Ride = Ride;
-//# sourceMappingURL=ride.js.map
+StopsRepository = __decorate([
+    __param(0, core_1.inject('datasources.db')),
+    __metadata("design:paramtypes", [loopback_datasource_juggler_1.DataSource])
+], StopsRepository);
+exports.StopsRepository = StopsRepository;
+//# sourceMappingURL=stops.repository.js.map

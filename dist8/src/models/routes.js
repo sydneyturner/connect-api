@@ -25,7 +25,7 @@ __decorate([
 __decorate([
     repository_1.property({
         type: 'number',
-        length: 20,
+        length: 10,
         required: true
     }),
     __metadata("design:type", Number)
@@ -33,7 +33,7 @@ __decorate([
 __decorate([
     repository_1.property({
         type: 'number',
-        length: 20,
+        length: 10,
         required: true
     }),
     __metadata("design:type", Number)
