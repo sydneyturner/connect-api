@@ -12,10 +12,24 @@ export class StopsController {
 
   // get stops by town route
   @get('/stops/town-route')
-  async getStopsByTownRoute(): Promise<any> {
+  async getStopsByTownRoute(): Promise<Array<Stops>> {
     var townStops = await this.stopsRepo.find({ where: { route: 'town-route' } })
     return townStops;
   }
+
+  @get('/stops')
+  async getAllStops(): Promise<any> {
+    var allStops = await this.stopsRepo.find();
+    return allStops;
+  }
+
+  // get town-route lat and lng
+  // @get('/stops/town-route/lat-lng')
+  // async getTownLatLng(): Promise<any> {
+  //   var townLatLng = await this.stopsRepo.find();
+
+  //   return townLatLng;
+  // }
 
 
 }

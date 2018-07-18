@@ -17,11 +17,11 @@ export class UserController {
   @get('/users')
   async getAllUsers(@param.query.string('jwt') jwt: string): Promise<any> {
     if (!jwt) throw new HttpErrors.Unauthorized('JWT token is required');
-
+    var allUsers = await this.userRepo.find();
     try {
       var jwtBody = verify(jwt, 'shh');
       console.log(jwtBody);
-      return jwtBody;
+      return await this.userRepo.find();
     } catch (err) {
       throw new HttpErrors.Unauthorized('JWT token is required');
 

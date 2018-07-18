@@ -9,6 +9,12 @@ export class Routes extends Entity {
   id?: number;
 
   @property({
+    type: 'string',
+    required: true
+  })
+  routeName: string;
+
+  @property({
     type: 'number',
     length: 10,
     required: true

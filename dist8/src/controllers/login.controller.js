@@ -28,13 +28,13 @@ let LoginController = class LoginController {
         this.userRepo = userRepo;
         this.driverRepo = driverRepo;
     }
+    // creates the token for the user
     async loginUser(login) {
         var users = await this.userRepo.find();
         var email = login.email;
         var password = await bcrypt.hash(login.password, 10);
         for (var i = 0; i < users.length; i++) {
             var user = users[i];
-            // find the user by email address if not...(look at Perry's code)
             if (user.email == email && await bcrypt.compare(login.password, user.password)) {
                 var jwt = jsonwebtoken_1.sign({
                     user: {

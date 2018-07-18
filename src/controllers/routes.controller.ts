@@ -12,19 +12,25 @@ export class RoutesController {
 
 
   // town route
-  @get('/town-route')
+  @get('/routes/town-route')
   async getTownRoute(@param.query.string('jwt') jwt: string): Promise<Routes[]> {
     if (!jwt) throw new HttpErrors.Unauthorized('JWT token is required.');
-    var townRoute = await this.routesRepo.find();
+    var townRoute = await this.routesRepo.find({ where: { route: 'town-route' } });
     try {
       var jwtBody = verify(jwt, 'shh');
-      return await this.routesRepo.find();
+      return await this.routesRepo.find({ where: { route: 'town-route' } });
 
     } catch (err) {
       throw new HttpErrors.BadRequest('JWT token invalid');
     }
   }
 
-  // create new route
+  // for right now: this is the town-route
+  @get('/routes')
+  async getAllRoutes(): Promise<any> {
+    var allRoutes = await this.routesRepo.find();
+    // get all route coordinates
+    return allRoutes;
+  }
 
 }

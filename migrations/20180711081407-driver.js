@@ -10,6 +10,7 @@ exports.setup = function (options, seedLink) {
   seed = seedLink;
 };
 
+
 exports.up = function (db, done) {
   db.createTable('driver', {
     id: {

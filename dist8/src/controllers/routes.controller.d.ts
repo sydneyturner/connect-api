@@ -4,4 +4,5 @@ export declare class RoutesController {
     private routesRepo;
     constructor(routesRepo: RoutesRepository);
     getTownRoute(jwt: string): Promise<Routes[]>;
+    getAllRoutes(): Promise<any>;
 }

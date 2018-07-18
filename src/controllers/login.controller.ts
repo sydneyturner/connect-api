@@ -16,6 +16,7 @@ export class LoginController {
   constructor(@repository(UserRepository.name) private userRepo: UserRepository,
     @repository(DriverRepository.name) private driverRepo: DriverRepository) { }
 
+  // creates the token for the user
   @post('/loginUser')
   async loginUser(@requestBody() login: User): Promise<any> {
     var users = await this.userRepo.find();
@@ -25,8 +26,6 @@ export class LoginController {
 
     for (var i = 0; i < users.length; i++) {
       var user = users[i];
-
-      // find the user by email address if not...(look at Perry's code)
 
       if (user.email == email && await bcrypt.compare(login.password, user.password)) {
 

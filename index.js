@@ -10,32 +10,43 @@ if (require.main === module) {
   });
 }
 
-// let app = require('express')();
-// let http = require('http').Server(app);
-// let io = require('socket.io')(http);
+let app = require('express')();
+let http = require('http').Server(app);
+let io = require('socket.io')(http);
 
-// io.on('connection', (socket) => {
+io.on('connection', (socket) => {
 
-//   socket.on('disconnect', function () {
-//     io.emit('users-changed', { user: socket.nickname, event: 'left' });
-//   });
+  socket.on('disconnect', function () {
+    io.emit('users-changed', { user: socket.nickname, event: 'left' });
+  });
 
-//   // socket.on('driver-loc', (driver) => {
-//   //   socket.driver = driver;
-//   //   io.emit('new driver', { user: driver, event: 'joined' });
-//   // });
+  // socket.on('driver-loc', (driver) => {
+  //   socket.driver = driver;
+  //   io.emit('new driver', { user: driver, event: 'joined' });
+  // });
 
-//   socket.on('sendLocation', (data) => {
-//     // user: driver
-//     io.emit('sendToEveryone', { data });
-//   });
+  socket.on('sendLocation', (data) => {
+    console.log('Got the drivers loc..going to send');
+    // user: driver
+    console.log(data);
+    try {
+      io.emit('sendToEveryone', { data });
+      console.log('sending to everyone...')
+    } catch (err) {
+      console.log('did not send to anyone');
+      console.log(err);
+    }
+  });
 
+  socket.on('error', (err) => {
+    console.log(err);
+  });
 
-// });
+});
 
-// var port = process.env.PORT || 3001;
+var port = process.env.PORT || 3001;
 
-// http.listen(port, function () {
-//   console.log('listening in http://localhost:' + port);
-// });
+http.listen(port, function () {
+  console.log('listening in http://localhost:' + port);
+});
 

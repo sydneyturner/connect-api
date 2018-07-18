@@ -26,6 +26,10 @@ let StopsController = class StopsController {
         var townStops = await this.stopsRepo.find({ where: { route: 'town-route' } });
         return townStops;
     }
+    async getAllStops() {
+        var allStops = await this.stopsRepo.find();
+        return allStops;
+    }
 };
 __decorate([
     rest_1.get('/stops/town-route'),
@@ -33,6 +37,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], StopsController.prototype, "getStopsByTownRoute", null);
+__decorate([
+    rest_1.get('/stops'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], StopsController.prototype, "getAllStops", null);
 StopsController = __decorate([
     __param(0, repository_1.repository(stops_repository_1.StopsRepository.name)),
     __metadata("design:paramtypes", [stops_repository_1.StopsRepository])

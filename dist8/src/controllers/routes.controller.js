@@ -26,23 +26,35 @@ let RoutesController = class RoutesController {
     async getTownRoute(jwt) {
         if (!jwt)
             throw new rest_1.HttpErrors.Unauthorized('JWT token is required.');
-        var townRoute = await this.routesRepo.find();
+        var townRoute = await this.routesRepo.find({ where: { route: 'town-route' } });
         try {
             var jwtBody = jsonwebtoken_1.verify(jwt, 'shh');
-            return await this.routesRepo.find();
+            return await this.routesRepo.find({ where: { route: 'town-route' } });
         }
         catch (err) {
             throw new rest_1.HttpErrors.BadRequest('JWT token invalid');
         }
     }
+    // for right now: this is the town-route
+    async getAllRoutes() {
+        var allRoutes = await this.routesRepo.find();
+        // get all route coordinates
+        return allRoutes;
+    }
 };
 __decorate([
-    rest_1.get('/town-route'),
+    rest_1.get('/routes/town-route'),
     __param(0, rest_1.param.query.string('jwt')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], RoutesController.prototype, "getTownRoute", null);
+__decorate([
+    rest_1.get('/routes'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], RoutesController.prototype, "getAllRoutes", null);
 RoutesController = __decorate([
     __param(0, repository_1.repository(routes_repository_1.RoutesRepository.name)),
     __metadata("design:paramtypes", [routes_repository_1.RoutesRepository])

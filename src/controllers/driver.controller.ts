@@ -15,11 +15,11 @@ export class DriverController {
   @get('/drivers')
   async getAllDrivers(@param.query.string('jwt') jwt: string): Promise<any> {
     if (!jwt) throw new HttpErrors.Unauthorized('JWT token is required');
-
+    var allDrivers = await this.driverRepo.find();
     try {
       var jwtBody = verify(jwt, 'shh');
       console.log(jwtBody);
-      return jwtBody;
+      return await this.driverRepo.find();
     } catch (err) {
       throw new HttpErrors.Unauthorized('JWT token is required');
 

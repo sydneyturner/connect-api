@@ -24,6 +24,13 @@ __decorate([
 ], Routes.prototype, "id", void 0);
 __decorate([
     repository_1.property({
+        type: 'string',
+        required: true
+    }),
+    __metadata("design:type", String)
+], Routes.prototype, "routeName", void 0);
+__decorate([
+    repository_1.property({
         type: 'number',
         length: 10,
         required: true

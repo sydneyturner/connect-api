@@ -28,10 +28,11 @@ let UserController = class UserController {
     async getAllUsers(jwt) {
         if (!jwt)
             throw new rest_1.HttpErrors.Unauthorized('JWT token is required');
+        var allUsers = await this.userRepo.find();
         try {
             var jwtBody = jsonwebtoken_1.verify(jwt, 'shh');
             console.log(jwtBody);
-            return jwtBody;
+            return await this.userRepo.find();
         }
         catch (err) {
             throw new rest_1.HttpErrors.Unauthorized('JWT token is required');
