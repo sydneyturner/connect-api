@@ -6,5 +6,21 @@
     "user": "root",
     "password": "chiko2012",
     "database": "connect"
+  },
+  "live": {
+    "driver": "mysql",
+    "host": {
+      "ENV": "DATABASE_HOST"
+    },
+    "port": "3306",
+    "user": {
+      "ENV": "DATABASE_USER"
+    },
+    "password": {
+      "ENV": "DATABASE_PASSWORD"
+    },
+    "database": {
+      "ENV": "DATABASE_NAME"
+    }
   }
 }
